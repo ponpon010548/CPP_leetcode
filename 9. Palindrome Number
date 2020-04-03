@@ -1,0 +1,91 @@
+//use stack
+
+class Solution {
+public:
+    bool isPalindrome(int x) {
+        if (x < 0)
+            return false;
+        if (check(x))
+            return true;
+    return false;
+    }
+private:    
+    bool check(int x) {
+        stack <int> s;
+        if(x==0) return true;
+        int length = floor(log10(x))+1;
+        if(length == 1) return true;
+        int l = (length + 1) / 2;
+        while(l){
+            s.push(x%10);
+            x = x /10;
+            l--;
+        }
+        if(length%2 != 0)
+            s.pop();
+        while(!s.empty()){
+            int y = x % 10;
+            if( y !=s.top()) 
+                return false;
+            s.pop();
+            x = x / 10;
+        }
+        return true;
+    }
+};
+
+//only reverse half of the integer
+
+class Solution {
+public:
+    bool isPalindrome(int x) {
+        if (x < 0)
+            return false;
+        if (check(x))
+            return true;
+    return false;
+    }
+private:    
+    bool check(int x) {
+        if(x==0) return true;
+        int length = floor(log10(x))+1;
+        if(length == 1) return true;
+        int res = 0;
+        for(int i = 0; i < length / 2 ; i++){
+            if (res > INT_MAX / 10) 
+                return false;            
+            res = res * 10 + x % 10;   
+            x = x / 10;
+            }
+        if(length % 2 != 0){
+            int y = x / 10;
+            return res == y;
+        }
+        return res == x;
+    }
+};
+
+
+// A straight forward method, using reverse integer
+
+class Solution {
+public:
+    bool isPalindrome(int x) {
+        if (x < 0)
+            return false;
+        if (x == reverse(x))
+            return true;
+    return false;
+    }
+    int reverse(int x) {        
+        int res = 0;     
+        while(x){                       
+            if(res > INT_MAX/10)                //check overflow before * 10
+                return 0;
+            res = (x % 10) + res * 10;
+            x = x / 10;
+            
+        }
+    return res;
+    }
+};
