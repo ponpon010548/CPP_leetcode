@@ -1,0 +1,32 @@
+//use erase
+//erase takes O(n) time
+//So, the solution takes O(n^2) time
+
+class Solution {
+public:
+    int removeElement(vector<int>& nums, int val) {    
+        for(int i = 0; i < nums.size(); i++){
+            if(nums[i] == val){
+                nums.erase(nums.begin() + i);
+                i--;
+            }
+        }
+        return nums.size();
+    }
+};
+
+
+//O(n) solution
+
+class Solution {
+public:
+    int removeElement(vector<int>& nums, int val) {
+        int l = 0;
+        for(int i = 0; i < nums.size(); i++){
+            if(nums[i] != val){
+                nums[l++] = nums[i];
+            }
+        }
+        return l;
+    }
+};
