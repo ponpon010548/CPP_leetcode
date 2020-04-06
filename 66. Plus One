@@ -1,0 +1,31 @@
+//use linked list
+class Solution {
+public:
+    vector<int> plusOne(vector<int>& digits) {
+        ListNode* end = new ListNode(0);
+        ListNode* p = end;
+        int c = 1;
+        for (int i = digits.size() - 1; i >= 0; i--){
+            int sum = digits[i] + c;
+            c = 0;
+            if(sum > 9){
+                c = sum / 10;
+                sum = sum % 10;
+            }
+            ListNode* temp = new ListNode(sum);
+            temp -> next = p;
+            p = temp;
+        }
+        if(c){
+            ListNode* temp = new ListNode(c);
+            temp -> next = p;
+            p = temp;
+        }
+        vector<int> v;
+        while(p->next){
+            v.push_back(p->val);
+            p = p->next;
+        }
+        return v;
+    }
+};
