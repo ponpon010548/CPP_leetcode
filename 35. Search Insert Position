@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int searchInsert(vector<int>& nums, int target) {
+        int end = nums.size() - 1;
+        if(nums[0] >= target)
+            return 0;
+        if(nums[end] < target)
+            return end + 1;
+        if(nums[end] == target)
+            return end;
+        int res = binarySearch(nums, 0, end, target);
+        return res;
+    }
+private:
+    int binarySearch(vector<int>& nums, int lower, int upper, int target){
+        if(upper - lower < 2){
+            if(target <= nums[lower])
+                return lower;
+            return lower + 1;
+        }
+        int mid = (upper + lower)/2;
+        
+        if(nums[mid] > target)
+            return binarySearch(nums, lower, mid  , target);
+        else if(nums[mid] < target)
+            return binarySearch(nums, mid , upper, target);
+        else
+            return mid;
+    }
+};
