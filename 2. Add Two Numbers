@@ -62,14 +62,8 @@ public:
         int c = 0;
         int val1, val2 = 0;
         while(l1 || l2){
-            if(l1)
-                val1 = l1 -> val;
-            else
-                val1 = 0;
-            if(l2)
-                val2 = l2 -> val;
-            else
-                val2 = 0;
+            val1 = (l1) ? l1->val : 0;                     // if l1==NULL, then we set the value = 0
+            val2 = (l2) ? l2->val : 0;                     // if l2==NULL, then we set the value = 0
             int sum = val1 + val2 + c;
             c = 0;            
             if (sum >9){
@@ -79,9 +73,9 @@ public:
             ListNode* temp = new ListNode(sum);            
             res->next = temp;
             res = res -> next;
-            if(l1)
-                l1 = l1 -> next;
-            if(l2)
+            if(l1)                                      //if l1==NULL then l1 would not move
+                l1 = l1 -> next;                 
+            if(l2)                                      //if l2==NULL then l2 would not move
                 l2 = l2 -> next;
         }
         
@@ -92,5 +86,4 @@ public:
         }
         return p_res->next;
     }
-
 };
