@@ -10,40 +10,37 @@
 class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        ListNode* p_l1 = l1;
-        ListNode* p_l2 = l2;
         ListNode* res = new ListNode(0);
-        ListNode* p_res = res;
-        int c = 0;
-        while(p_l1 && p_l2){
-            int sum = p_l1->val + p_l2->val + c;
-            ListNode* temp = new ListNode(0);
-            if (sum >9){
-                c = sum / 10;
+        ListNode* p_res = res;                               //result
+        int c = 0;                                           //carry
+        while(l1 && l2){                                     //l1 and l2 must be done simultaneously
+            int sum = l1->val + l2->val + c;                // add two numbers and the carry
+            c = 0;                                          //carry should be reset to zero after calculating the sum
+            if (sum >9){                                   
+                c = sum / 10;     
                 sum = sum % 10;
             }
-            else c = 0;
-            temp-> val = temp -> val + sum;            
-            res->next = temp;
+            ListNode* temp = new ListNode(sum);               //new node with value equal to sum
+            res->next = temp;                                 
             res = res -> next;
-            if(p_l1 -> next == NULL && p_l2 -> next != NULL){
-                ListNode* temp2 = new ListNode(0);
-                p_l1 -> next = temp2;
+            if(l1 -> next == NULL && l2 -> next != NULL){      //check : whether it is the last node of l1 or not 
+                ListNode* temp2 = new ListNode(0);           
+                l1 -> next = temp2;                             //we add a node to l1
             }
-            if(p_l2 -> next == NULL && p_l1 -> next != NULL){
+            if(l2 -> next == NULL && l1 -> next != NULL){     //check : whether it is the last node of l2 or not
                 ListNode* temp2 = new ListNode(0);
-                p_l2 -> next = temp2;
+                l2 -> next = temp2;                           //we add a node to l1
             }
-            p_l1 = p_l1 -> next;
-            p_l2 = p_l2 -> next;
+            l1 = l1 -> next;
+            l2 = l2 -> next;
         }
         
-        if(c){
+        if(c){                                               //if carry is not zero, then we have to add a node
             ListNode* temp = new ListNode(c);
             res->next = temp;
             res = res -> next;
         }
-        return p_res->next;
+        return p_res->next;                                  //because we do not need the first node
     }
 
 };
@@ -60,59 +57,34 @@ public:
 class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        ListNode* p_l1 = l1;
-        ListNode* p_l2 = l2;
         ListNode* res = new ListNode(0);
         ListNode* p_res = res;
         int c = 0;
-        while(p_l1 && p_l2){
-            int sum = p_l1->val + p_l2->val + c;
-            ListNode* temp = new ListNode(0);
+        int val1, val2 = 0;
+        while(l1 || l2){
+            if(l1)
+                val1 = l1 -> val;
+            else
+                val1 = 0;
+            if(l2)
+                val2 = l2 -> val;
+            else
+                val2 = 0;
+            int sum = val1 + val2 + c;
+            c = 0;            
             if (sum >9){
                 c = sum / 10;
                 sum = sum % 10;
             }
-            else c = 0;
-            temp-> val = temp -> val + sum;            
+            ListNode* temp = new ListNode(sum);            
             res->next = temp;
             res = res -> next;
-            p_l1 = p_l1 -> next;
-            p_l2 = p_l2 -> next;
+            if(l1)
+                l1 = l1 -> next;
+            if(l2)
+                l2 = l2 -> next;
         }
-        if(p_l1){
-            while(c && p_l1){
-                int sum = p_l1->val + c;
-                ListNode* temp = new ListNode(0);
-                if (sum >9){
-                c = sum / 10;
-                sum = sum % 10;
-                }
-                else c = 0;
-                 temp-> val = temp -> val + sum;
-                res->next = temp;
-                res = res -> next;
-                p_l1 = p_l1 -> next;
-            }
-            if(p_l1)
-                res->next = p_l1;
-        }
-        if(p_l2){
-            while(c && p_l2){
-                int sum = p_l2->val + c;
-                ListNode* temp = new ListNode(0);
-                if (sum >9){
-                c = sum / 10;
-                sum = sum % 10;
-                }
-                else c = 0;
-                 temp-> val = temp -> val + sum;
-                res->next = temp;
-                res = res -> next;
-                p_l2 = p_l2 -> next;
-            }
-            if(p_l2)
-                res->next = p_l2;
-        }
+        
         if(c){
             ListNode* temp = new ListNode(c);
             res->next = temp;
